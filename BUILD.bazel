@@ -1,0 +1,13 @@
+genrule(
+    name = "darwin",
+    srcs = [
+        "@libarchive_darwin_arm64_static//file",
+    ],
+    outs = ["bsdtar"],
+    executable = True,
+    cmd = """
+tmp=$$(mktemp)
+gzcat $(location @libarchive_darwin_arm64_static//file) | tail -c "+5217905" > $$tmp
+head -c 3866160 $$tmp > $@
+"""
+)
